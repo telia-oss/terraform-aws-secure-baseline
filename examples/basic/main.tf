@@ -56,8 +56,10 @@ module "aws-config" {
   delivery_channel_name = "default"
   include_global_resource_types = true
 
+  
   #Enable GuardDuty in all regions.
   guard_duty_enabled = false
+
 
   # Set up IAM Password Policy and create default IAM roles for managing AWS account.
   master_iam_role_enabled = false
@@ -68,8 +70,6 @@ module "aws-config" {
   secure_log_bucket_name = "secure-baseline-log-bucket"
   lifecycle_glacier_transition_days = 90
   force_destroy = true
-
-  #Enable SecurityHub and subscribe CIS benchmark standard.
 
 
   #Enable VPC Flow Logs with the default VPC in all regions.

@@ -3,4 +3,4 @@ Enabled modules:
 - AWS Config with rules
 - CloudTrail
 - CloudWatch
-- SecurityHub
+- SecurityHub (based on module nozaq/secure-baseline it is enabled automatically and subscribe CIS benchmark standard.)

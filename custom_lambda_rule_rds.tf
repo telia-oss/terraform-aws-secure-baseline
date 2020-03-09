@@ -27,7 +27,7 @@ data "archive_file" "lambda_zip_inline_LambdaFunctionConfigRule" {
 
   source {
     filename = "index.py"
-    content = "${file("${path.module}/custom_lambda_rule/no_rds_instances_in_public_subnets_check.py")}"
+    content = "${file("${path.module}/custom_lambda_rules/no_rds_instances_in_public_subnets_check.py")}"
 
   }
 }
