@@ -1,3 +1,8 @@
+#Secure-baseline module
+
+This module enables basic security services in AWS.
+
+
 | AWS Config Rule name | Description |
 | --- | --- |
 | eip_attached | A Config rule that checks whether all Elastic IP addresses that are allocated to a VPC are attached to EC2 instances or in-use elastic network interfaces (ENIs). |

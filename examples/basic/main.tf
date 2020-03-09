@@ -56,7 +56,7 @@ module "aws-config" {
   delivery_channel_name = "default"
   include_global_resource_types = true
 
-  
+
   #Enable GuardDuty in all regions.
   guard_duty_enabled = false
 
