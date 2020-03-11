@@ -20,11 +20,6 @@ resource "aws_s3_bucket" "S3SharedBucket" {
     id      = "auto-archive"
     enabled = true
 
-    transition {
-      days          = var.lifecycle_onezone_ia_transition_days
-      storage_class = "ONEZONE_IA"
-    }
-    
 
     transition {
       days          = var.lifecycle_glacier_transition_days

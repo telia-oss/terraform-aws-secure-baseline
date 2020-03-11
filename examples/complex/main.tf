@@ -88,10 +88,11 @@ module "aws-config" {
   allow_users_to_change_password = true
 
 
+
   #Creates a S3 bucket with access logging enabled.
   secure_bucket_enabled = true
   secure_log_bucket_name = "secure-baseline-log-bucket"
-  lifecycle_glacier_transition_days = 90
+  lifecycle_glacier_transition_days = 30
   force_destroy = true
 
   #Enable SecurityHub and subscribe CIS benchmark standard.
