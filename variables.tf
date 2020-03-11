@@ -289,7 +289,7 @@ variable "secure_log_bucket_name" {
 
 variable "lifecycle_glacier_transition_days" {
   description = "The number of days after object creation when the object is archived into Glacier."
-  default     = 15
+  default     = 30
 }
 
 variable "force_destroy" {
@@ -356,10 +356,4 @@ variable "s3_bucket_expiration_days" {
   description = "Specifies a period in the object's expire"
   type        = number
   default = 365
-}
-
-variable "lifecycle_onezone_ia_transition_days" {
-  description = "The number of days after object creation when the object is archived into Onezone IA."
-  type = number
-  default = 30
 }
