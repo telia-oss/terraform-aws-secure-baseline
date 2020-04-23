@@ -376,13 +376,73 @@ variable "vpc_log_retention_in_days" {
   default = ""
 }
 
+variable "s3_bucket_expiration_days" {
+  description = "Specifies a period in the object's expire"
+  type        = number
+  default = 365
+}
+
 variable "eip_attached_rule_enabled" {
   description = "AWS Config rule"
   type = bool
   default = true
 }
 
+variable "iam_password_policy_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
 variable "iam_user_no_policies_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "root_account_mfa_enabled_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "s3_bucket_ssl_requests_only_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "ebs_encrypted_volumes_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "sg_ssh_restricted_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "sg_unrestricted_common_ports_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "ec2_unused_ebs_volumes_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "ebs_snapshots_not_publicly_restorable_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "ec2_stopped_instances_check_rule_enabled" {
   description = "AWS Config rule"
   type = bool
   default = true
@@ -406,14 +466,56 @@ variable "sg_atatched_to_eni_rule_enabled" {
   default = true
 }
 
-variable "rds_multi_az_support" {
+variable "sg_open_to_specific_ports_only_rule_enabled" {
   description = "AWS Config rule"
   type = bool
   default = true
 }
 
-variable "s3_bucket_expiration_days" {
-  description = "Specifies a period in the object's expire"
-  type        = number
-  default = 365
+variable "s3_public_read_disable_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "s3_public_write_disable_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "s3_sse_enabled_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "rds_instance_public_access_check_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "db_instance_backup_enabled_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "rds_snapshots_public_prohibited_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "rds_multi_az_support_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
+}
+
+variable "rds_storage_encrypted_rule_enabled" {
+  description = "AWS Config rule"
+  type = bool
+  default = true
 }
