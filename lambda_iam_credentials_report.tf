@@ -1,0 +1,60 @@
+data "archive_file" "lambda_zip_inline_LambdaFunctionIamReport" {
+  type = "zip"
+  output_path = "${path.module}/lambda_iam_report.zip"
+
+  source {
+    filename = "iam_generate_extended_credentials_report.py"
+    content = "${file("${path.module}/lambda_src/iam_generate_extended_credentials_report.py")}"
+
+  }
+}
+
+resource "aws_lambda_function" "LambdaFunctionIamReport" {
+  function_name = "LambdaFunction_iam_extended_credentials_report"
+  timeout = "300"
+  runtime = "python3.6"
+  handler = "iam_generate_extended_credentials_report.lambda_handler"
+  role = aws_iam_role.LambdaIamGenerateIamReport.arn
+  filename = data.archive_file.lambda_zip_inline_LambdaFunctionIamReport.output_path
+  source_code_hash = data.archive_file.lambda_zip_inline_LambdaFunctionIamReport.output_base64sha256
+}
+
+resource "aws_lambda_permission" "LambdaPermissionIamReport" {
+  action = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.LambdaFunctionIamReport.function_name
+  principal = "config.amazonaws.com"
+}
+
+resource "aws_iam_role" "LambdaIamGenerateIamReport" {
+  name = "IamRole_iam_extended_credentials_report"
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": ["lambda.amazonaws.com"]
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "LambdaIamRoleConfigRuleManagedPolicyRoleAttachment0" {
+  role = aws_iam_role.LambdaIamRoleConfigRule.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "LambdaIamRoleConfigRuleManagedPolicyRoleAttachment1" {
+  role = aws_iam_role.LambdaIamRoleConfigRule.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSConfigRulesExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "LambdaIamRoleConfigRuleManagedPolicyRoleAttachment2" {
+  role = aws_iam_role.LambdaIamRoleConfigRule.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
