@@ -11,9 +11,9 @@ module "secure-baseline_alarm-baseline" {
   source  = "nozaq/secure-baseline/aws//modules/alarm-baseline"
   version = "0.17.0"
 
-  enabled = var.cloudwatch_enabled
-  alarm_namespace = var.alarm_namespace
+  enabled                   = var.cloudwatch_enabled
+  alarm_namespace           = var.alarm_namespace
   cloudtrail_log_group_name = var.cloudtrail_log_group_name
-  sns_topic_name = var.sns_topic_name
-  tags = local.tags
+  sns_topic_name            = var.sns_topic_name
+  tags                      = local.tags
 }
