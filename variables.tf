@@ -417,3 +417,22 @@ variable "s3_bucket_expiration_days" {
   type        = number
   default = 365
 }
+
+variable "iam_credentials_sns_topic_name" {
+  description = "The name of the SNS Topic to be used to notify IAM credentials report result."
+  type        = string
+  default = "iam_report"
+}
+
+variable "iam_credentials_s3_bucket_name" {
+  description = "The name of the S3 Bucket to be used to save IAM credentials report result."
+  type        = string
+  default = "IamGenerateIamReport"
+}
+
+variable "iam_credentials_s3_file_name" {
+  description = "The name of the file in S3 Bucket to be used to save IAM credentials report result."
+  type        = string
+  default = "iam_credentials_report.csv"
+}
+
