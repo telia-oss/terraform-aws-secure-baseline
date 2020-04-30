@@ -15,7 +15,7 @@ resource "aws_lambda_function" "LambdaFunctionIamReport" {
   timeout          = "300"
   runtime          = "python3.6"
   handler          = "iam_generate_extended_credentials_report.lambda_handler"
-  role             = aws_iam_role.LambdaIamGenerateIamReport.arn
+  role             = aws_iam_role.LambdaIamGenerateIamReport[count.index].arn
   filename         = data.archive_file.lambda_zip_inline_LambdaFunctionIamReport.output_path
   source_code_hash = data.archive_file.lambda_zip_inline_LambdaFunctionIamReport.output_base64sha256
   environment {
@@ -30,7 +30,7 @@ resource "aws_lambda_function" "LambdaFunctionIamReport" {
 resource "aws_lambda_permission" "LambdaPermissionIamReport" {
   count         = var.iam_credentials_report_enabled ? 1 : 0
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.LambdaFunctionIamReport.function_name
+  function_name = aws_lambda_function.LambdaFunctionIamReport[count.index].function_name
   principal     = "config.amazonaws.com"
 }
 
@@ -72,7 +72,7 @@ resource "aws_s3_bucket_policy" "IamGenerateIamReportS3Policy" {
       "Sid": "AllowS3BucketAccess",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "${aws_iam_role.LambdaIamGenerateIamReport.arn}"
+        "AWS": "${aws_iam_role.LambdaIamGenerateIamReport[count.index].arn}"
       },
       "Action": [
         "s3:*"
@@ -92,12 +92,12 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRoleAttachment0" {
   count      = var.iam_credentials_report_enabled ? 1 : 0
-  role       = aws_iam_role.LambdaIamGenerateIamReport.name
+  role       = aws_iam_role.LambdaIamGenerateIamReport[count.index].name
   policy_arn = "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRoleAttachment1" {
   count      = var.iam_credentials_report_enabled ? 1 : 0
-  role       = aws_iam_role.LambdaIamGenerateIamReport.name
+  role       = aws_iam_role.LambdaIamGenerateIamReport[count.index].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
