@@ -10,6 +10,7 @@ data "archive_file" "lambda_zip_inline_LambdaFunctionIamReport" {
 }
 
 resource "aws_lambda_function" "LambdaFunctionIamReport" {
+  count            = var.iam_credentials_report_enabled ? 1 : 0
   function_name    = "LambdaFunction_iam_extended_credentials_report"
   timeout          = "300"
   runtime          = "python3.6"
@@ -27,12 +28,14 @@ resource "aws_lambda_function" "LambdaFunctionIamReport" {
 }
 
 resource "aws_lambda_permission" "LambdaPermissionIamReport" {
+  count         = var.iam_credentials_report_enabled ? 1 : 0
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.LambdaFunctionIamReport.function_name
   principal     = "config.amazonaws.com"
 }
 
 resource "aws_iam_role" "LambdaIamGenerateIamReport" {
+  count              = var.iam_credentials_report_enabled ? 1 : 0
   name               = "IamRole_iam_extended_credentials_report"
   assume_role_policy = <<POLICY
 {
@@ -52,11 +55,13 @@ POLICY
 }
 
 resource "aws_s3_bucket" "IamGenerateIamReport" {
+  count  = var.iam_credentials_report_enabled ? 1 : 0
   bucket = var.iam_credentials_s3_bucket_name
   acl    = "private"
 }
 
 resource "aws_s3_bucket_policy" "IamGenerateIamReportS3Policy" {
+  count  = var.iam_credentials_report_enabled ? 1 : 0
   bucket = var.iam_credentials_s3_bucket_name
 
   policy = <<POLICY
@@ -86,11 +91,13 @@ POLICY
 
 
 resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRoleAttachment0" {
+  count      = var.iam_credentials_report_enabled ? 1 : 0
   role       = aws_iam_role.LambdaIamGenerateIamReport.name
   policy_arn = "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRoleAttachment1" {
+  count      = var.iam_credentials_report_enabled ? 1 : 0
   role       = aws_iam_role.LambdaIamGenerateIamReport.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
