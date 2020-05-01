@@ -77,12 +77,37 @@ module "aws-config" {
 
 
   #AWS Config custom rules
-  eip_attached_rule_enabled = false
-  iam_user_no_policies_check_rule_enabled = false
-  ec2_instance_managed_by_systems_manager_rule_enabled = false
-  default_security_group_closed_check_rule_enabled = false
-  sg_atatched_to_eni_rule_enabled = false
-  rds_multi_az_support = false
+  eip_attached_rule_enabled                                = true
+  iam_password_policy_rule_enabled                         = false
+  iam_user_no_policies_check_rule_enabled                  = false
+  root_account_mfa_enabled_rule_enabled                    = false
+  s3_bucket_ssl_requests_only_rule_enabled                 = false
+  ebs_encrypted_volumes_check_rule_enabled                 = false
+  sg_ssh_restricted_check_rule_enabled                     = false
+  sg_unrestricted_common_ports_check_rule_enabled          = false
+  ec2_unused_ebs_volumes_check_rule_enabled                = false
+  ebs_snapshots_not_publicly_restorable_check_rule_enabled = false
+  ec2_stopped_instances_check_rule_enabled                 = false
+  ec2_instance_managed_by_systems_manager_rule_enabled     = false
+  default_security_group_closed_check_rule_enabled         = false
+  sg_atatched_to_eni_rule_enabled                          = false
+  sg_open_to_specific_ports_only_rule_enabled              = false
+  s3_public_read_disable_check_rule_enabled                = false
+  s3_public_write_disable_check_rule_enabled               = false
+  s3_sse_enabled_check_rule_enabled                        = false
+  rds_instance_public_access_check_rule_enabled            = false
+  db_instance_backup_enabled_rule_enabled                  = false
+  rds_snapshots_public_prohibited_rule_enabled             = false
+  rds_multi_az_support_rule_enabled                        = false
+  rds_storage_encrypted_rule_enabled                       = false
+
+
+  # IAM credentials report
+  iam_credentials_report_enabled = false
+  iam_credentials_sns_topic_name = "iam-report-topic"  # Topic will be NOT created. Use of an existing topic is assumed.
+  iam_credentials_s3_bucket_name = "iam-report-bucket"
+  iam_credentials_s3_file_name   = "iam_credentials_report.csv"
+
 }
 
 
