@@ -7,3 +7,4 @@ Enabled modules:
 - GuardDuty
 - IAM Password Policy
 - VPC Flow Logs 
+- AWS IAM credentials report (extended)
