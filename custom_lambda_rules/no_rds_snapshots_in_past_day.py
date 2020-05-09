@@ -1,6 +1,6 @@
 #
 #
-# Description: Check that all the RDS instances have a snapshot created in past day
+# Description: Check that all the RDS instances have a snapshot created in past day - only automatic snapshots evaluated
 #
 # Trigger Type: Periodic check
 # Scope of Changes: RDS:DBInstance
@@ -42,7 +42,7 @@ def evaluate_compliance():
             dbsnaps = client.describe_db_instances(nextToken=dbsnaps['nextToken'])
             db_snapshots += dbsnaps['DBSnapshots']
         db_snapshots = [
-            snap for snap in db_snapshots if snap['SnapshotCreateTime'].timestamp() > (time.time() - 24*60*60)
+            snap for snap in db_snapshots if snap['SnapshotCreateTime'].timestamp() > (time.time() - 24*60*60) and snap['SnapshotType'] == 'automated'
         ]
         if len(db_snapshots) == 0:
             non_complient_list.append(db['DBInstanceIdentifier'])
