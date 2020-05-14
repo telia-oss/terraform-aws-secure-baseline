@@ -523,6 +523,7 @@ variable "rds_storage_encrypted_rule_enabled" {
 variable "iam_credentials_report_enabled" {
   description = "The boolean flag whether this module is enabled or not. No resources are created when set to false."
   type        = bool
+  default     = false
 }
 
 variable "iam_credentials_sns_topic_name" {
