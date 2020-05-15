@@ -58,6 +58,13 @@ resource "aws_s3_bucket" "IamGenerateIamReport" {
   count  = var.iam_credentials_report_enabled ? 1 : 0
   bucket = var.iam_credentials_s3_bucket_name
   acl    = "private"
+
+  logging {
+    target_bucket = var.iam_credentials_s3_bucket_name
+    target_prefix = "${var.s3_key_prefix}-iam-report"
+  }
+
+
 }
 
 resource "aws_s3_bucket_policy" "IamGenerateIamReportS3Policy" {
