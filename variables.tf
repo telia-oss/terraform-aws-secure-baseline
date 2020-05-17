@@ -529,8 +529,7 @@ variable "iam_credentials_report_enabled" {
 variable "iam_credentials_sns_topic_name" {
   description = "The name of the SNS Topic to be used to notify IAM credentials report result."
   type        = string
-  default     = "iam_report"
-}
+  }
 
 variable "iam_credentials_s3_bucket_name" {
   description = "The name of the S3 Bucket to be used to save IAM credentials report result."
@@ -543,3 +542,14 @@ variable "iam_credentials_s3_file_name" {
   type        = string
   default     = "iam_credentials_report.csv"
 }
+
+variable "config_rules_report_enabled" {
+  description = "The boolean flag whether this module is enabled or not. No resources are created when set to false."
+  type        = bool
+  default     = false
+}
+
+variable "config_rules_sns_topic_name" {
+  description = "The name of the SNS Topic to be used to notify IAM credentials report result."
+  type        = string
+  }
