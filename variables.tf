@@ -529,7 +529,7 @@ variable "iam_credentials_report_enabled" {
 variable "iam_credentials_sns_topic_name" {
   description = "The name of the SNS Topic to be used to notify IAM credentials report result."
   type        = string
-  }
+}
 
 variable "iam_credentials_s3_bucket_name" {
   description = "The name of the S3 Bucket to be used to save IAM credentials report result."
@@ -552,4 +552,4 @@ variable "config_rules_report_enabled" {
 variable "config_rules_sns_topic_name" {
   description = "The name of the SNS Topic to be used to notify IAM credentials report result."
   type        = string
-  }
+}

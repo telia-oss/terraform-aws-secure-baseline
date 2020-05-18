@@ -19,7 +19,7 @@ resource "aws_lambda_function" "LambdaFunctionConfigRules" {
   source_code_hash = data.archive_file.lambda_zip_inline_LambdaFunctionConfigRules.output_base64sha256
   environment {
     variables = {
-      SNS_TOPIC_ARN = var.aws_config_sns_topic_name,
+      SNS_TOPIC_ARN = var.config_rules_sns_topic_name,
     }
   }
 }
@@ -56,7 +56,7 @@ resource "aws_iam_role" "LambdaRoleConfigRules" {
     {
       "Effect": "Allow",
       "Action": [
-      "config:Describe*",
+      "config:Describe*"
       ],
       "Resource": "*"
     }
@@ -66,21 +66,24 @@ POLICY
 }
 
 resource "aws_cloudwatch_event_rule" "every_seven_days" {
+  count               = var.config_rules_report_enabled ? 1 : 0
   name                = "every-seven-days"
   description         = "Fires every 7 days"
   schedule_expression = "rate(7 days)"
 }
 
 resource "aws_cloudwatch_event_target" "check_once_per_week" {
-  rule      = aws_cloudwatch_event_rule.every_seven_days
+  count     = var.config_rules_report_enabled ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.every_seven_days[0].arn
   target_id = "lambda"
-  arn       = aws_lambda_function.LambdaFunctionConfigRules.arn
+  arn       = aws_lambda_function.LambdaFunctionConfigRules[0].arn
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_config_rules" {
+  count         = var.config_rules_report_enabled ? 1 : 0
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.LambdaFunctionConfigRules
+  function_name = aws_lambda_function.LambdaFunctionConfigRules[0].arn
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.every_seven_days.arn
+  source_arn    = aws_cloudwatch_event_rule.every_seven_days[0].arn
 }
