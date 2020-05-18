@@ -67,7 +67,7 @@ resource "aws_iam_role" "LambdaRoleConfigRules" {
 POLICY
 }
 
-resource "aws_iam_policy" "sns_publish_policy" {
+resource "aws_iam_policy" "config-rules-sns_publish_policy" {
   count      = var.config_rules_report_enabled ? 1 : 0
   name        = "config-rules-report-sns-publish-policy"
   description = "Config rules SNS publish policy"
