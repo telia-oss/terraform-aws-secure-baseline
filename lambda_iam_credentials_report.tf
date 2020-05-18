@@ -78,7 +78,7 @@ resource "aws_iam_policy" "sns_publish_policy" {
     "Sid": "sns publish",
     "Effect": "Allow",
     "Principal": {
-    "AWS": "${aws_iam_role.LambdaIamGenerateIamReport[count.index].arn}"
+    "AWS": "${aws_iam_role.LambdaIamGenerateIamReport[0].arn}"
       },
     "Action": ["sns:Publish"],
     "Resource":   "${var.iam_credentials_sns_topic_arn}"
