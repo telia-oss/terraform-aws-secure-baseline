@@ -7,7 +7,7 @@ log = logging.getLogger()
 log.setLevel(logging.INFO)
 
 # *********** VARIABLES ************
-SNS_SUBJECT = "Config non-compliant rules report"
+SNS_SUBJECT = "AWS Config non-compliant rules report"
 
 # *********** FROM ENV ************
 
@@ -55,5 +55,6 @@ def lambda_handler(event, context):
 
     non_compliant_rules = get_non_compliant_rules()
     # TODO fix message content
-    publish_response = sns_publish_report(SNS_TOPIC_ARN, SNS_SUBJECT, non_compliant_rules)
+    message =" AWS config non-compliant rules count: "+str(len(non_compliant_rules)) + ", details: " + json.dumps(non_compliant_rules)
+    publish_response = sns_publish_report(SNS_TOPIC_ARN, SNS_SUBJECT, message)
     log.info('SNS publish response: %s', publish_response)
