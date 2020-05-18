@@ -208,4 +208,4 @@ def lambda_handler(event, context):
     url = write_report_s3(extended_report_lines, BUCKET_NAME, BUCKET_KEY)
 
     publish_response = sns_publish_report(SNS_TOPIC_ARN, SNS_SUBJECT, SNS_MESSAGE_PREFIX + url)
-    log.info('SNS publish reponse: %s', publish_response)
+    log.info('SNS publish response: %s', publish_response)
