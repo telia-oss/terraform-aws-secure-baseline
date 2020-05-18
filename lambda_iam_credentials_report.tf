@@ -67,7 +67,7 @@ resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRo
 }
 
 resource "aws_iam_policy" "sns_publish_policy" {
-  name        = "sns publish"
+  name        = "sns-publish-policy"
   description = "SNS publish policy"
 
   policy = <<POLICY
