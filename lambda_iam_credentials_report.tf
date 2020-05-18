@@ -155,3 +155,4 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_iam_report" {
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.every_half_year[count.index].arn
 }
+
