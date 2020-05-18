@@ -90,7 +90,7 @@ resource "aws_s3_bucket_policy" "IamGenerateIamReportS3Policy" {
       ]
     },
     {
-      "Sid": "grant-1234-publish",
+      "Sid": "sns publish",
       "Effect": "Allow",
       "Principal": {
         "AWS": "${aws_iam_role.LambdaIamGenerateIamReport[count.index].arn}"
@@ -124,16 +124,16 @@ resource "aws_cloudwatch_event_rule" "every_half_year" {
 
 resource "aws_cloudwatch_event_target" "check_every_half_year" {
   count     = var.iam_credentials_report_enabled ? 1 : 0
-  rule      = aws_cloudwatch_event_rule.every_half_year[0].arn
+  rule      = aws_cloudwatch_event_rule.every_half_year[count.index].arn
   target_id = "lambda"
-  arn       = aws_lambda_function.LambdaFunctionIamReport[0].arn
+  arn       = aws_lambda_function.LambdaFunctionIamReport[count.index].arn
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_iam_report" {
   count         = var.iam_credentials_report_enabled ? 1 : 0
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.LambdaFunctionIamReport[0].arn
+  function_name = aws_lambda_function.LambdaFunctionIamReport[count.index].arn
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.every_half_year[0].arn
+  source_arn    = aws_cloudwatch_event_rule.every_half_year[count.index].arn
 }
