@@ -19,7 +19,7 @@ resource "aws_lambda_function" "LambdaFunctionConfigRules" {
   source_code_hash = data.archive_file.lambda_zip_inline_LambdaFunctionConfigRules.output_base64sha256
   environment {
     variables = {
-      SNS_TOPIC_ARN = var.aws_config_sns_topic_name,
+      SNS_TOPIC_ARN = var.config_rules_sns_topic_name,
     }
   }
 }
@@ -56,7 +56,7 @@ resource "aws_iam_role" "LambdaRoleConfigRules" {
     {
       "Effect": "Allow",
       "Action": [
-      "config:Describe*",
+      "config:Describe*"
       ],
       "Resource": "*"
     }
@@ -74,7 +74,7 @@ resource "aws_cloudwatch_event_rule" "every_seven_days" {
 resource "aws_cloudwatch_event_target" "check_once_per_week" {
   rule      = aws_cloudwatch_event_rule.every_seven_days
   target_id = "lambda"
-  arn       = aws_lambda_function.LambdaFunctionConfigRules.arn
+  arn       = aws_lambda_function.LambdaFunctionConfigRules[0].arn
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_config_rules" {
