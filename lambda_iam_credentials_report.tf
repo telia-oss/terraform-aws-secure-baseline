@@ -67,6 +67,7 @@ resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRo
 }
 
 resource "aws_iam_policy" "sns_publish_policy" {
+  count      = var.iam_credentials_report_enabled ? 1 : 0
   name        = "sns-publish-policy"
   description = "SNS publish policy"
 
@@ -91,7 +92,7 @@ POLICY
 resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRoleAttachment2" {
   count      = var.iam_credentials_report_enabled ? 1 : 0
   role       = aws_iam_role.LambdaIamGenerateIamReport[count.index].name
-  policy_arn = aws_iam_policy.sns_publish_policy
+  policy_arn = aws_iam_policy.sns_publish_policy[count.index].arn
 }
 
 resource "aws_s3_bucket" "IamGenerateIamReport" {
