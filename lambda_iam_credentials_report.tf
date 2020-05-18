@@ -20,7 +20,7 @@ resource "aws_lambda_function" "LambdaFunctionIamReport" {
   source_code_hash = data.archive_file.lambda_zip_inline_LambdaFunctionIamReport.output_base64sha256
   environment {
     variables = {
-      SNS_TOPIC_ARN = var.iam_credentials_sns_topic_name,
+      SNS_TOPIC_ARN = var.iam_credentials_sns_topic_arn,
       BUCKET_NAME   = var.iam_credentials_s3_bucket_name,
       BUCKET_KEY    = var.iam_credentials_s3_file_name
     }
@@ -88,11 +88,21 @@ resource "aws_s3_bucket_policy" "IamGenerateIamReportS3Policy" {
         "arn:aws:s3:::${var.iam_credentials_s3_bucket_name}",
         "arn:aws:s3:::${var.iam_credentials_s3_bucket_name}/*"
       ]
+    },
+    {
+      "Sid": "grant-1234-publish",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${aws_iam_role.LambdaIamGenerateIamReport[count.index].arn}"
+      },
+      "Action": ["sns:Publish"],
+      "Resource":   "${var.iam_credentials_sns_topic_arn}"
     }
   ]
 }
 POLICY
 }
+
 resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRoleAttachment0" {
   count      = var.iam_credentials_report_enabled ? 1 : 0
   role       = aws_iam_role.LambdaIamGenerateIamReport[count.index].name

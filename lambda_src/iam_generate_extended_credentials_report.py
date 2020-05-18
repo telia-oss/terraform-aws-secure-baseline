@@ -14,15 +14,16 @@ iam = boto3.client('iam')
 
 # *********** VARIABLES ************
 CSV_DELIMITER = ","
-IAM_GENERATE_SLEEP_TIMEOUT=2
-SNS_SUBJECT="IAM credentials report"
-SNS_MESSAGE_PREFIX= "New IAM credentials report available here: "
+IAM_GENERATE_SLEEP_TIMEOUT = 2
+SNS_SUBJECT = "IAM credentials report"
+SNS_MESSAGE_PREFIX = "New IAM credentials report available here: "
 
 # *********** FROM ENV ************
 
 BUCKET_NAME = os.environ['BUCKET_NAME']
 BUCKET_KEY = os.environ['BUCKET_KEY']
 SNS_TOPIC_ARN = os.environ['SNS_TOPIC_ARN']
+
 
 # *********** METHODS ************
 
@@ -68,7 +69,7 @@ def get_group_policies(group_names):
     """
     returns groups attached policies
     """
-    # TODO algorithm optimalization needed
+    # TODO optimize algorithm
     group_list = group_names.split(" ")
     all_group_policies = ""
     for group in group_list:
@@ -148,7 +149,7 @@ def prepare_extended_iam_report(iam_report):
             user_policies_names = get_user_policies_names(row[0])
             row.append(user_policies_names.strip())
             # add group policies
-            # TODO can be optimalized via global policies list (not only per user)
+            # TODO can be optimized via global policies list (not only per user)
             group_policies_names = get_group_policies(group_names.strip())
             row.append(group_policies_names.strip())
             output_csv_lines.append(row)
@@ -186,18 +187,20 @@ def write_report_s3(report: list, bucket_name: str, bucket_key: str):
         logging.error(e)
     return download_url
 
+
 def sns_publish_report(sns_topic_arn, subject, msg):
     """
     publishes report link to SNS topic
     """
     sns = boto3.client('sns')
     response = sns.publish(
-    TargetArn=sns_topic_arn,
-    Subject= subject,
-    Message=json.dumps({'default': json.dumps(msg)}),
-    MessageStructure='json'
+        TargetArn=sns_topic_arn,
+        Subject=subject,
+        Message=json.dumps({'default': json.dumps(msg)}),
+        MessageStructure='json'
     )
     return response
+
 
 # *********** LAMBDA ENTRY POINT ************
 def lambda_handler(event, context):
