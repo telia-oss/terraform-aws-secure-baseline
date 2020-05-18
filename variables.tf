@@ -526,8 +526,8 @@ variable "iam_credentials_report_enabled" {
   default     = false
 }
 
-variable "iam_credentials_sns_topic_name" {
-  description = "The name of the SNS Topic to be used to notify IAM credentials report result."
+variable "iam_credentials_sns_topic_arn" {
+  description = "ARN of SNS Topic to be used to notify IAM credentials report result."
   type        = string
 }
 
