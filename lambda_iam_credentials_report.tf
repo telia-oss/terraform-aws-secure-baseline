@@ -106,21 +106,21 @@ resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRo
 }
 
 resource "aws_cloudwatch_event_rule" "every_half_year" {
-  count      = var.iam_credentials_report_enabled ? 1 : 0
+  count               = var.iam_credentials_report_enabled ? 1 : 0
   name                = "every-half-year"
   description         = "Fires every 6 months"
   schedule_expression = "rate(182 days)"
 }
 
 resource "aws_cloudwatch_event_target" "check_every_half_year" {
-  count      = var.iam_credentials_report_enabled ? 1 : 0
+  count     = var.iam_credentials_report_enabled ? 1 : 0
   rule      = aws_cloudwatch_event_rule.every_half_year[0].arn
   target_id = "lambda"
   arn       = aws_lambda_function.LambdaFunctionIamReport[0].arn
 }
 
-resource "aws_lambda_permission" "allow_cloudwatch_to_call_config_rules" {
-  count      = var.iam_credentials_report_enabled ? 1 : 0
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_iam_report" {
+  count         = var.iam_credentials_report_enabled ? 1 : 0
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.LambdaFunctionIamReport[0].arn
