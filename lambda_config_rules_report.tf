@@ -61,19 +61,39 @@ resource "aws_iam_role" "LambdaRoleConfigRules" {
       "config:Describe*"
       ],
       "Resource": "*"
-    },
-    {
-      "Sid": "sns publish",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "${aws_iam_role.LambdaRoleConfigRules[count.index].arn}"
-      },
-      "Action": ["sns:Publish"],
-      "Resource": "${var.config_rules_sns_topic_arn}"
-  }
+    }
   ]
 }
 POLICY
+}
+
+resource "aws_iam_policy" "sns_publish_policy" {
+  count      = var.config_rules_report_enabled ? 1 : 0
+  name        = "config-rules-report-sns-publish-policy"
+  description = "Config rules SNS publish policy"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+    "Sid": "sns publish",
+    "Effect": "Allow",
+    "Principal": {
+    "AWS": "${aws_iam_role.LambdaRoleConfigRules[count.index].arn}"
+      },
+    "Action": ["sns:Publish"],
+    "Resource":   "${var.config_rules_sns_topic_arn}"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "LambdaIamRoleConfigRulesManagedPolicyRoleAttachment0" {
+  count      = var.config_rules_report_enabled ? 1 : 0
+  role       = aws_iam_role.LambdaRoleConfigRules[count.index].name
+  policy_arn = aws_iam_policy.sns_publish_policy[count.index].arn
 }
 
 resource "aws_cloudwatch_event_rule" "every_seven_days" {
