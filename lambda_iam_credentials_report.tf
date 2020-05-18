@@ -66,7 +66,7 @@ resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRo
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-resource "aws_iam_policy" "sns_publish_policy" {
+resource "aws_iam_policy" "sns-publish-policy" {
   name        = "sns publish"
   description = "SNS publish policy"
 
