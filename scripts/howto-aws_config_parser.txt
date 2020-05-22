@@ -1,0 +1,13 @@
+AWS config non-compliant rules parser
+
+REQUIREMENTS:
+- working aws CLI utility
+
+- working terraform utily for Terraform state check functionality
+
+HOWTO:
+- install python3 required packages:  pip3 install --user -r requirements.txt
+
+- change AWS_DEFAULT_REGION environment variable if needed
+
+- run script a check output for further help
