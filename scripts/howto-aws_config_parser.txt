@@ -1,6 +1,8 @@
 AWS config non-compliant rules parser
 
 REQUIREMENTS:
+- python3 & pip3
+
 - working aws CLI utility
 
 - working terraform utily for Terraform state check functionality
