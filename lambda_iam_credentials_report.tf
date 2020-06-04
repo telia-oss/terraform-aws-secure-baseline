@@ -67,7 +67,7 @@ resource "aws_iam_role_policy_attachment" "LambdaIamRoleIamReportManagedPolicyRo
 }
 
 resource "aws_iam_policy" "sns_publish_policy" {
-  count      = var.iam_credentials_report_enabled ? 1 : 0
+  count       = var.iam_credentials_report_enabled ? 1 : 0
   name        = "iam-report-sns-publish-policy"
   description = "SNS publish policy"
 
