@@ -8,8 +8,9 @@ provider "aws" {
 }
 
 locals {
-  region      = "eu-west-1"
-  aws_account = "123456789"
+  region        = "eu-west-1"
+  aws_account   = "123456789"
+  sns_topic_arn = "arn:aws:sns:${local.region}:${local.aws_account}:test-topic"
 }
 
 module "aws-config" {
@@ -101,12 +102,15 @@ module "aws-config" {
   rds_multi_az_support_rule_enabled                        = false
   rds_storage_encrypted_rule_enabled                       = false
 
-
   # IAM credentials report
   iam_credentials_report_enabled = false
-  iam_credentials_sns_topic_name = "iam-report-topic" # Topic will be NOT created. Use of an existing topic is assumed.
+  iam_credentials_sns_topic_arn  = local.sns_topic_arn
   iam_credentials_s3_bucket_name = "iam-report-bucket"
   iam_credentials_s3_file_name   = "iam_credentials_report.csv"
+
+  # Config rules report
+  config_rules_report_enabled = false
+  config_rules_sns_topic_arn  = local.sns_topic_arn
 
 }
 

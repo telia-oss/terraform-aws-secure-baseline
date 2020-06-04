@@ -550,7 +550,7 @@ variable "config_rules_report_enabled" {
 }
 
 variable "config_rules_sns_topic_arn" {
-  description = "ARN of SNS Topic to be used to notify IAM credentials report result."
+  description = "ARN of SNS Topic to be used to notify config rules report result."
   type        = string
 }
 

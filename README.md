@@ -100,7 +100,13 @@ This module sets up secure configurations in your AWS account.
 
 ### SecurityHub-baseline: Enable SecurityHub and subscribe CIS benchmark standard.
 
-Always enabled.
+SecurityHub and CIS benchmark standard always enabled.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:-----:| 
+|securityhub\_pci\_standard\_enabled | A boolean that indicates PCI DSS standard is enabled. Resources are not created if it is set to false. | `bool` | `true` | no |
+|securityhub\_aws\_standard\_enabled | A boolean that indicates AWS Foundational Security Best Practices standard is enabled. Resources are not created if it is set to false. | `bool` | `true` | no |
+
 
 ### VPC-baseline: Enable VPC Flow Logs with the default VPC in all regions.
 | Name | Description | Type | Default | Required |
@@ -149,6 +155,26 @@ Always enabled.
 | rds_vpc_public_subnet | A Config rule that checks that no RDS Instances are in Public Subnet. |
 | rds_snapshots | A Config rule that checks that no RDS Instances is having snapshots older than day. |
 
+### IAM credentials report: Enable IAM users credentials report.
+
+Generates report in CSV format into specified S3 bucket and sends SNS notification.
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:-----:| 
+|iam\_credentials\_report\_enabled | The boolean flag whether this module is enabled or not. No resources are created when set to false. | `bool` | `false` | no |
+|iam\_credentials\_sns\_topic\_arn | ARN of SNS Topic to be used to notify IAM credentials report result. | `string` | `""` | yes |
+|iam\_credentials\_s3\_bucket\_name | The name of the S3 Bucket to be used to save IAM credentials report result. | `string` | `IamGenerateIamReport` | no |
+|iam\_credentials\_s3\_file\_name | The name of the file in S3 Bucket to be used to save IAM credentials report result. | `string` | `iam_credentials_report.csv` | no |
+
+ ## Config rules report: Enable Config rules report.
+ 
+ Generates non-compliant config rules report and sends SNS notification with details.
+ 
+ | Name | Description | Type | Default | Required |
+ |------|-------------|------|---------|:-----:| 
+ |config\_rules\_report\_enabled | The boolean flag whether this module is enabled or not. No resources are created when set to false. | `bool` | `false` | no |
+ |config\_rules\_sns\_topic\_arn | ARN of SNS Topic to be used to notify config rules report result. | `string` | `""` | yes |
+ 
 
 ## Outputs
 
