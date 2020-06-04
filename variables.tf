@@ -553,3 +553,16 @@ variable "config_rules_sns_topic_arn" {
   description = "ARN of SNS Topic to be used to notify IAM credentials report result."
   type        = string
 }
+
+variable "securityhub_pci_standard_enabled" {
+  description = "The boolean flag whether PCI DSS standard is enabled or not. No resources are created when set to false."
+  type        = bool
+  default     = true
+}
+
+variable "securityhub_aws_standard_enabled" {
+  description = "The boolean flag whether AWS Foundational Security Best Practices standard is enabled or not. No resources are created when set to false."
+  type        = bool
+  default     = true
+}
+
