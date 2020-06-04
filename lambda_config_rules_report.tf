@@ -68,7 +68,7 @@ POLICY
 }
 
 resource "aws_iam_policy" "config-rules-sns_publish_policy" {
-  count      = var.config_rules_report_enabled ? 1 : 0
+  count       = var.config_rules_report_enabled ? 1 : 0
   name        = "config-rules-report-sns-publish-policy"
   description = "Config rules SNS publish policy"
 

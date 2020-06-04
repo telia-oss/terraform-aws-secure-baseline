@@ -8,7 +8,7 @@ provider "aws" {
 }
 
 locals {
-  region = "eu-west-1"
+  region      = "eu-west-1"
   aws_account = "123456789"
 }
 
@@ -22,38 +22,38 @@ module "aws-config" {
   local_environment = "dev"
 
   tags = {
-  Project     = "security-basic-dev"
-  Environment = "dev"
+    Project     = "security-basic-dev"
+    Environment = "dev"
   }
 
   # Set up CloudWatch alarms to notify you when critical changes happen in your AWS account.
-  cloudwatch_enabled = true
-  alarm_namespace = "CISBenchmark"
+  cloudwatch_enabled        = true
+  alarm_namespace           = "CISBenchmark"
   cloudtrail_log_group_name = "dev-cloudtrai-logs"
-  sns_topic_name = "CISAlarm"
+  sns_topic_name            = "CISAlarm"
 
 
   # Enable CloudTrail in all regions and deliver events to CloudWatch Logs.
-  cloudtrail_enabled = true
-  aws_account_id = local.aws_account
-  cloudtrail_name = "cloudtrail-multi-region"
-  cloudtrail_sns_topic_name = "cloudtrail-multi-region-sns-topic"
+  cloudtrail_enabled                = true
+  aws_account_id                    = local.aws_account
+  cloudtrail_name                   = "cloudtrail-multi-region"
+  cloudtrail_sns_topic_name         = "cloudtrail-multi-region-sns-topic"
   cloudwatch_logs_retention_in_days = 365
-  cloud_trail_iam_role_name = "CloudTrail-CloudWatch-Delivery-Role"
-  cloud_trail_iam_role_policy_name = "CloudTrail-CloudWatch-Delivery-Policy"
-  key_deletion_window_in_days = 10
-  s3_bucket_name = "cloud-trail-dev"
-  s3_key_prefix = "secure-baseline"
-  is_organization_trail = false
+  cloud_trail_iam_role_name         = "CloudTrail-CloudWatch-Delivery-Role"
+  cloud_trail_iam_role_policy_name  = "CloudTrail-CloudWatch-Delivery-Policy"
+  key_deletion_window_in_days       = 10
+  s3_bucket_name                    = "cloud-trail-dev"
+  s3_key_prefix                     = "secure-baseline"
+  is_organization_trail             = false
 
 
   #Enable AWS Config in all regions to automatically take configuration snapshots.
-  aws_config_enabled = true
-  aws_config_iam_role_arn = "arn:aws:iam::${local.aws_account}:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig"
-  aws_config_sns_topic_name = "ConfigChanges"
-  delivery_frequency = "Three_Hours"
-  recorder_name = "default"
-  delivery_channel_name = "default"
+  aws_config_enabled            = true
+  aws_config_iam_role_arn       = "arn:aws:iam::${local.aws_account}:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig"
+  aws_config_sns_topic_name     = "ConfigChanges"
+  delivery_frequency            = "Three_Hours"
+  recorder_name                 = "default"
+  delivery_channel_name         = "default"
   include_global_resource_types = true
 
 
@@ -66,10 +66,10 @@ module "aws-config" {
 
 
   #Creates a S3 bucket with access logging enabled.
-  secure_bucket_enabled = true
-  secure_log_bucket_name = "secure-baseline-log-bucket"
+  secure_bucket_enabled             = true
+  secure_log_bucket_name            = "secure-baseline-log-bucket"
   lifecycle_glacier_transition_days = 30
-  force_destroy = true
+  force_destroy                     = true
 
 
   #Enable VPC Flow Logs with the default VPC in all regions.
@@ -104,7 +104,7 @@ module "aws-config" {
 
   # IAM credentials report
   iam_credentials_report_enabled = false
-  iam_credentials_sns_topic_name = "iam-report-topic"  # Topic will be NOT created. Use of an existing topic is assumed.
+  iam_credentials_sns_topic_name = "iam-report-topic" # Topic will be NOT created. Use of an existing topic is assumed.
   iam_credentials_s3_bucket_name = "iam-report-bucket"
   iam_credentials_s3_file_name   = "iam_credentials_report.csv"
 
