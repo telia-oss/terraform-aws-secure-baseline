@@ -5,12 +5,10 @@ module "secure-baseline_securityhub-baseline" {
 
 resource "aws_securityhub_standards_subscription" "pci_321" {
   count         = var.securityhub_pci_standard_enabled ? 1 : 0
-  depends_on    = ["aws_securityhub_account.main"]
   standards_arn = "arn:aws:securityhub:${var.aws_region}::standards/pci-dss/v/3.2.1"
 }
 
 resource "aws_securityhub_standards_subscription" "aws_foundation" {
   count         = var.securityhub_aws_standard_enabled ? 1 : 0
-  depends_on    = ["aws_securityhub_account.main"]
   standards_arn = "arn:aws:securityhub:${var.aws_region}::standards/aws-foundational-security-best-practices/v/1.0.0"
 }
