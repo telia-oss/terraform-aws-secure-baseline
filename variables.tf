@@ -550,7 +550,7 @@ variable "config_rules_report_enabled" {
 }
 
 variable "config_rules_sns_topic_arn" {
-  description = "ARN of SNS Topic to be used to notify config rules report result."
+  description = "ARN of SNS Topic to be used to notify config rulesG report result."
   type        = string
 }
 
@@ -564,5 +564,17 @@ variable "securityhub_aws_standard_enabled" {
   description = "The boolean flag whether AWS Foundational Security Best Practices standard is enabled or not. No resources are created when set to false."
   type        = bool
   default     = true
+}
+
+variable "custom_lambda_vpc_security_group_ids" {
+  description = "The list of custom lambda VPC security group ids."
+  type        = list(string)
+  default     = []
+}
+
+variable "custom_lambda_vpc_private_subnets" {
+  description = "The list of custom lambda VPC private subnets."
+  type        = list(string)
+  default     = []
 }
 

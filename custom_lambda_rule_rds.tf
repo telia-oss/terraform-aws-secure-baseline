@@ -40,6 +40,11 @@ resource "aws_lambda_function" "LambdaFunctionConfigRule" {
   role             = aws_iam_role.LambdaIamRoleConfigRule.arn
   filename         = data.archive_file.lambda_zip_inline_LambdaFunctionConfigRule.output_path
   source_code_hash = data.archive_file.lambda_zip_inline_LambdaFunctionConfigRule.output_base64sha256
+
+  vpc_config {
+    security_group_ids = var.custom_lambda_vpc_security_group_ids
+    subnet_ids         = var.custom_lambda_vpc_private_subnets
+  }
 }
 
 resource "aws_lambda_permission" "LambdaPermissionConfigRule" {
