@@ -175,6 +175,14 @@ Generates report in CSV format into specified S3 bucket and sends SNS notificati
  |config\_rules\_report\_enabled | The boolean flag whether this module is enabled or not. No resources are created when set to false. | `bool` | `false` | no |
  |config\_rules\_sns\_topic\_arn | ARN of SNS Topic to be used to notify config rules report result. | `string` | `""` | yes |
  
+ ## Custom config rules
+  
+  Custom config rules checking RDS via lambda functions.
+  
+  | Name | Description | Type | Default | Required |
+  |------|-------------|------|---------|:-----:| 
+  |custom\_lambda\_vpc_\security\_group\_ids | The list of custom lambda VPC security group ids. | `list(string)` | `[]` | no |
+  |custom\_lambda\_vpc_\private\_subnets | The list of custom lambda VPC private subnets. | `list(string)` | `[]` | no | 
 
 ## Outputs
 

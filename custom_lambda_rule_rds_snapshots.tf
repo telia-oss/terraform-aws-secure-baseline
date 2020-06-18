@@ -36,6 +36,11 @@ resource "aws_lambda_function" "RDSSnapshotLambdaFunctionConfigRule" {
   role             = aws_iam_role.RDSSnapshotLambdaIamRoleConfigRule.arn
   filename         = data.archive_file.lambda_zip_inline_RDSSnapshotLambdaFunctionConfigRule.output_path
   source_code_hash = data.archive_file.lambda_zip_inline_RDSSnapshotLambdaFunctionConfigRule.output_base64sha256
+
+  vpc_config {
+    security_group_ids = var.custom_lambda_vpc_security_group_ids
+    subnet_ids         = var.custom_lambda_vpc_private_subnets
+  }
 }
 
 resource "aws_lambda_permission" "RDSSnapshotLambdaPermissionConfigRule" {
