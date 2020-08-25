@@ -1,6 +1,6 @@
 module "secure-baseline_vpc-baseline" {
   source  = "nozaq/secure-baseline/aws//modules/vpc-baseline"
-  version = "0.17.0"
+  version = "0.20.0"
 
 
   enabled                    = var.vpc_logs_enabled

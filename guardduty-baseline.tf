@@ -1,6 +1,6 @@
 module "secure-baseline_guardduty-baseline" {
   source  = "nozaq/secure-baseline/aws//modules/guardduty-baseline"
-  version = "0.17.0"
+  version = "0.20.0"
 
   enabled                      = var.guard_duty_enabled
   disable_email_notification   = var.disable_email_notification

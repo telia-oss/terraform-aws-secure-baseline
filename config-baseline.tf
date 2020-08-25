@@ -1,6 +1,6 @@
 module "secure-baseline_config-baseline" {
   source  = "nozaq/secure-baseline/aws//modules/config-baseline"
-  version = "0.17.0"
+  version = "0.20.0"
 
   enabled                       = var.aws_config_enabled
   iam_role_arn                  = var.aws_config_iam_role_arn

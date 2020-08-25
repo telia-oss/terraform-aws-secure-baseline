@@ -9,7 +9,7 @@ locals {
 
 module "secure-baseline_alarm-baseline" {
   source  = "nozaq/secure-baseline/aws//modules/alarm-baseline"
-  version = "0.17.0"
+  version = "0.20.0"
 
   enabled                   = var.cloudwatch_enabled
   alarm_namespace           = var.alarm_namespace
