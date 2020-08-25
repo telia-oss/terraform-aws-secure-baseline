@@ -1,6 +1,6 @@
 module "secure-baseline_cloudtrail-baseline" {
   source  = "nozaq/secure-baseline/aws//modules/cloudtrail-baseline"
-  version = "0.17.0"
+  version = "0.20.0"
 
 
   enabled                           = var.cloudtrail_enabled
