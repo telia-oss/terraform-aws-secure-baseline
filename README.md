@@ -1,6 +1,7 @@
 # Secure-baseline module
 
-This module sets up secure configurations in your AWS account. 
+This module is archived and deprecated.
+Please use this instead https://github.com/nozaq/terraform-aws-secure-baseline 
 
 ## Services
 
